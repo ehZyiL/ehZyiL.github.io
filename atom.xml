@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-09-01T13:38:46.983Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>day02【抽象类，接口、代码块、final、单例、枚举</title>
+    <link href="http://example.com/2021/09/01/day02/"/>
+    <id>http://example.com/2021/09/01/day02/</id>
+    <published>2021-09-01T13:38:46.975Z</published>
+    <updated>2021-09-01T13:38:46.983Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="今日内容-记住语法"><a href="#今日内容-记住语法" class="headerlink" title="今日内容(记住语法)"></a>今日内容(记住语法)</h2><ul><li>抽象类<ul><li>拥有抽象方法的类就是抽象类。</li><li>抽象方法：是只有方法签名没有方法体，必须用abstract修饰。</li><li>抽象类本身也要用abstract修饰的，作用是让子类继承，子类一定要重写抽象方法。</li><li>模板思想，设计模板模式。</li></ul></li><li>接口<ul><li>更加彻底的抽象，接口中全部是抽象方法和常量（JDK1.8之后）</li><li>接口体现的是规范思想，实现接口的类必须重写完接口的全部抽象方法，否则这个类必须是抽象类。 </li><li>JDK 1.8之后的接口新增了三个方法。接口不再纯洁。</li></ul></li><li>代码块（成员变量，方法，构造器，代码块，内部类）</li><li>final关键字<ul><li>final是最终的意思。可以修饰类，变量，和方法。</li><li>修饰类：类不能被继承。类绝育了。</li><li>修饰方法：方法不能被重写。</li><li>修饰变量：变量有且仅能被赋值一次。</li></ul></li><li>单例设计模式<ul><li>设计模式，面试必考，经典模式。</li></ul></li><li>枚举<ul><li>面向对象的一种特殊类型，做信息分类和信息标志的。</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;今日内容-记住语法&quot;&gt;&lt;a href=&quot;#今日内容-记住语法&quot; class=&quot;headerlink&quot; title=&quot;今日内容(记住语法)&quot;&gt;&lt;/a&gt;今日内容(记住语法)&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;抽象类&lt;ul&gt;
+&lt;li&gt;拥有抽象方法的类就是抽象类。&lt;/li&gt;
+&lt;l</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>day01【复习回顾、静态、继承、引用类型使用】</title>
+    <link href="http://example.com/2021/09/01/day01/"/>
+    <id>http://example.com/2021/09/01/day01/</id>
+    <published>2021-09-01T13:37:50.327Z</published>
+    <updated>2021-09-01T13:37:50.331Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a>今日内容</h2><ul><li>复习回顾<ul><li>定义类。一个Java文件可以定义多个类。但是只有一个类是用public修饰，public修饰的类名必须称为Java文件名。</li><li>类中有且仅有5大成分（五大金刚）<ul><li>成员变量Field：描述类或者对象的属性信息的。</li><li>成员方法Method：描述类或者对象的行为的。</li><li>构造器（构造方法,Constructor）: 初始化类的一个对象返回。</li><li>代码块：还没有学。</li><li>内部类：还没有学。 </li></ul></li><li>封装<ul><li>面向对象的三大<strong>特征</strong>之一：<strong>封装，继承，多态</strong>。 </li><li>形成了规范，即使毫无意义还是会这样写代码！</li><li>合理隐藏，合理暴露。</li><li>封装的规范：成员变量私有，方法一般公开，提供成套的getter和setter方法暴露成员变量的取值和赋值。</li><li>封装的作用：提高安全性，提高代码的组件化思想。</li><li>封装已经成为Java代码的规范，即使毫无意义，我们也要这样写代码（成员变量私有，方法公开）</li></ul></li><li>this关键字<ul><li>this代表了当前对象的引用。</li><li>this可以出现在构造器和方法中。</li><li>this出现在构造器中代表构造器正在初始化的对象。</li><li>this出现在方法中，哪个对象调用方法，this就代表哪个对象。</li><li>this可以访问对象的成员变量，区分成员变量是局部的还是对象中的成员变量。</li></ul></li></ul></li><li>static关键字. <ul><li>静态。 </li><li>修饰方法和变量都是属于类的。没有static修饰的方法和变量是属于每个对象的。</li></ul></li><li>继承<ul><li>是面向对象的三大特征：封装，<strong>继承</strong>，多态。</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;&lt;h2 id=&quot;今日内容&quot;&gt;&lt;a href=&quot;#今日内容&quot; class=&quot;headerlink&quot; title=&quot;今日内容&quot;&gt;&lt;/a&gt;今日内容&lt;/h2&gt;&lt;ul&gt;
+&lt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://example.com/2021/09/01/hello-world/"/>
+    <id>http://example.com/2021/09/01/hello-world/</id>
+    <published>2021-09-01T11:40:45.300Z</published>
+    <updated>2021-09-01T11:40:45.300Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
