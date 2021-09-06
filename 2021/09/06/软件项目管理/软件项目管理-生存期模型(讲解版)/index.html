@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>软件项目管理-生存期模型(讲解版) | ehZyiL的博客</title><meta name="author" content="ehZyiL"><meta name="copyright" content="ehZyiL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第 3 章 软件生存期模型 引言软件将要经历一个定义、开发、运行维护，直至被淘汰这样的生命周期。为了使软件生命周期中的各项任务能够有序地按照规程进行，需要一定的工作模型对各项任务给予规程约束，这样的工作模型被称为软件生存期模型。  生存期模型选择 软件开发模型变迁软件开发的模式是一个在原有基础上不断更新、改进和添加的过程，最终目的是让软件开发这一过程变得更有效率、便捷。  20世纪60年代：软件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件项目管理-生存期模型(讲解版)">
+<meta property="og:url" content="http://example.com/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/index.html">
+<meta property="og:site_name" content="ehZyiL的博客">
+<meta property="og:description" content="第 3 章 软件生存期模型 引言软件将要经历一个定义、开发、运行维护，直至被淘汰这样的生命周期。为了使软件生命周期中的各项任务能够有序地按照规程进行，需要一定的工作模型对各项任务给予规程约束，这样的工作模型被称为软件生存期模型。  生存期模型选择 软件开发模型变迁软件开发的模式是一个在原有基础上不断更新、改进和添加的过程，最终目的是让软件开发这一过程变得更有效率、便捷。  20世纪60年代：软件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png">
+<meta property="article:published_time" content="2021-09-06T04:36:08.000Z">
+<meta property="article:modified_time" content="2021-09-06T05:35:09.878Z">
+<meta property="article:author" content="ehZyiL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="http://example.com/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '软件项目管理-生存期模型(讲解版)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-06 13:35:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="ehZyiL的博客" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ehZyiL的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">软件项目管理-生存期模型(讲解版)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-06T04:36:08.000Z" title="发表于 2021-09-06 12:36:08">2021-09-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-09-06T05:35:09.878Z" title="更新于 2021-09-06 13:35:09">2021-09-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">软件项目管理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="软件项目管理-生存期模型(讲解版)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<p><strong>第 3 章 软件生存期模型</strong></p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a><strong>引言</strong></h2><p>软件将要经历一个定义、开发、运行维护，直至被淘汰这样的生命周期。<br>为了使软件生命周期中的各项任务能够有序地按照规程进行，需要一定的工作模型对各项任务给予规程约束，这样的工作模型被称为软件生存期模型。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905233153022.png" alt="image-20210905233153022"></p>
+<h3 id="生存期模型选择"><a href="#生存期模型选择" class="headerlink" title="生存期模型选择"></a>生存期模型选择</h3><p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905233415481.png" alt="image-20210905233415481"></p>
+<h3 id="软件开发模型变迁"><a href="#软件开发模型变迁" class="headerlink" title="软件开发模型变迁"></a>软件开发模型变迁</h3><p>软件开发的模式是一个在原有基础上不断更新、改进和添加的过程，最终目的是让软件开发这一过程变得更有效率、便捷。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905233546638.png" alt="image-20210905233546638"></p>
+<p><strong>20世纪60年代：软件作坊，</strong>软件规模小，以作坊式开发为主；<br><strong>70年代：软件危机，</strong>硬件飞速发展，软件规模和复杂度激增，引发软件危机；<br><strong>80年代：软件过程控制，</strong>引入成熟生产制造管理方法，以“过程为中心”分阶段来控制软件开发（瀑布模型），一定程度上缓解了软件危机；<br><strong>90年代：重型过程，</strong>软件失败的经验促使过程被不断增加约束和限制，软件开发过程日益“重型化”，开发效率降低、响应速度发慢；<br><strong>2001~今：敏捷正在流行，</strong>随着信息时代到来，需求发化更快，交付周期成为企业核心竞争力，轻量级的，更能适应发化的敏捷软件开发方法被普遍认可并迅速流行。</p>
+<h2 id="一、生存期模型定义"><a href="#一、生存期模型定义" class="headerlink" title="一、生存期模型定义"></a>一、生存期模型定义</h2><p>软件开发的全部过程、活动和任务的结构框架，通过该模型能清晰、直观地表达软件开发全过程，明确地规定要完成的主要活动和任务，它奠定了软件项目工作的<strong>基础</strong>。</p>
+<h4 id="软件生存期模型特征"><a href="#软件生存期模型特征" class="headerlink" title="软件生存期模型特征"></a>软件生存期模型特征</h4><ul>
+<li><p>描述了开发的主要阶段</p>
+</li>
+<li><p>定义每一个阶段要完成的主要过程和活动</p>
+</li>
+<li><p>确定每一个阶段的输入和输出</p>
+<h4 id="软件生存期模型意义"><a href="#软件生存期模型意义" class="headerlink" title="软件生存期模型意义"></a>软件生存期模型意义</h4><ul>
+<li>软件开发模型是软件开发全部过程、 活动和任务的结构框架。 </li>
+<li>软件开发模型能清晰、直观地表达 软件开发全过程，明确规定了要完 成的主要活动和任务，用来作为软 件项目开发的基础。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210906000233151.png" alt="image-20210906000233151"></p>
+<h4 id="软件生存期模型分类"><a href="#软件生存期模型分类" class="headerlink" title="软件生存期模型分类"></a>软件生存期模型分类</h4><ul>
+<li>预测模型</li>
+<li>迭代模型</li>
+<li>增量模型</li>
+<li>敏捷模型</li>
+</ul>
+<h4 id="三、软件生命周期模型选择问题"><a href="#三、软件生命周期模型选择问题" class="headerlink" title="三、软件生命周期模型选择问题"></a><strong>三、软件生命周期模型选择问题</strong></h4><p>下图为生存期的项目特征</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/111.png" alt="111"></p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/222.png" alt="222"></p>
+<p>没有一个模型可以能完美的适应每一个项目,项目应根据具体特征实现最佳平衡</p>
+<h2 id="二、生存期模型分类介绍"><a href="#二、生存期模型分类介绍" class="headerlink" title="二、生存期模型分类介绍"></a>二、生存期模型分类介绍</h2><h3 id="1-预测型模型"><a href="#1-预测型模型" class="headerlink" title="1. 预测型模型"></a><strong>1. 预测型模型</strong></h3><p> 提前进行大量的计划工作，然后一次性执行;执行是一个连续的过程。要求项目是高确定性的、有明确的需求顺序执行。包括瀑布模型和V模型。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209101910893-1817368670.png" alt="1497698-20190209101910893-1817368670"></p>
+<h4 id="1-1-瀑布模型"><a href="#1-1-瀑布模型" class="headerlink" title="1.1 瀑布模型"></a><strong>1.1 瀑布模型</strong></h4><p>瀑布模型是将软件生存周期的各项活动规定为按固定顺序而连接的若干阶段工作，形如瀑布流水，最终得到软件产品。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/111.png" alt="111"></p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/222.png" alt="222"></p>
+<p>特点：</p>
+<ol>
+<li>软件开发的各个活动按<strong>线性</strong>方式进行</li>
+<li>管理简单、顺序执行</li>
+</ol>
+<p>优：</p>
+<ol>
+<li>为项目提供各阶段的检查点</li>
+<li>可在迭代模型中应用瀑布模型</li>
+</ol>
+<p>缺：</p>
+<ol>
+<li>各阶段划分比较固定，阶段之间会产生大量文档，增大工作量</li>
+<li>由于开发模型为线性的，客户只能等到过程末期才见到效果，增大开发风险</li>
+<li>无法适应用户需求的变化</li>
+</ol>
+<h4 id="1-2-V模型"><a href="#1-2-V模型" class="headerlink" title="1.2 V模型"></a><strong>1.2 V模型</strong></h4><p>V模型是瀑布模型的一个变种，强调测试与开发的一一对应关系。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209104118716-976753301.png" alt="1497698-20190209104118716-976753301"></p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209104232127-852031148.png" alt="1497698-20190209104232127-852031148"></p>
+<p>适用：适合对性能、安全等要求非常严格的场景。</p>
+<p> 补充:“螺旋模型”，是指将瀑布模型和快速原型模型结合起来，强调风险分析的一种开发模型。</p>
+<h3 id="3-迭代模型"><a href="#3-迭代模型" class="headerlink" title="3. 迭代模型"></a><strong>3. 迭代模型</strong></h3><pre><code>迭代模型也叫原型模型，基本的思想是——在限定的时间内，用最经济的方法开发出一个可实际运行的系统模型，用户在运行使用整个原型的基础上，通过对其评价，提出改进意见，对原型进行修改，统一使用，评价过程反复进行，使原型逐步完善，直到完全满足用户的需求为止。
+</code></pre>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E5%8E%9F%E5%9E%8B%E6%B3%95%E7%9A%84%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B.gif"></p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209112206857-1693021447.png"></p>
+<p>  适用：需求不明确、需要包含界面的系统。</p>
+<p>特点：</p>
+<ol>
+<li>实际可行</li>
+<li>具有最终系统的基本特征</li>
+<li>构造方便、快速、造价低</li>
+</ol>
+<p>优：</p>
+<ol>
+<li>增加用户与开发人员的交流</li>
+<li>用户在项目开发中占主导作用</li>
+<li>满足用户的动态需求</li>
+<li>降低开发风险</li>
+</ol>
+<p> 缺：</p>
+<ol>
+<li>因为用户的参与，使得忽视原型对实际环境的适应性等技术问题，所以不适合大型、复杂项目开发</li>
+<li>对于技术层面远大于其分析层面的问题不宜使用原型法</li>
+</ol>
+<h3 id="2-增量模型"><a href="#2-增量模型" class="headerlink" title="2. 增量模型"></a><strong>2. 增量模型</strong></h3><pre><code>增量模型是把一个项目分为多个增量来开发，从而分批次地分析、设计、编码和测试这些增量组件向客户提供各个己完成的，可能立即使用的可交付成果。相对于瀑布模型而言，采用增量模型进行开发，开发人员不需要一次性地把整个软件产品提交给用户，而是可以分批次进行提交。
+</code></pre>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pqdXd4eA==,size_16,color_FFFFFF,t_70"></p>
+<p>  要点：分增量优先开发核心功能，多次交付。</p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209114514355-1221070020.png"></p>
+<p> 缺点 :</p>
+<ul>
+<li>需要软件具备开放式的体系结构。 </li>
+<li>容易退化为边做边改方式，使软件过程的控制失去整体性(很难被模块化)。</li>
+<li>需求难以在增量实现之前详细定义，因此增量与需求的准确映射以及所有增量的有效集成可能会比较困难。</li>
+</ul>
+<p>实例:某大型企业计划开发一个“综合信息管理系统”，涉及销售、供应、财务、生产、人力资源等多个部门的信息管理。该企业的想法是按部门优先级别逐个实现，边应用边开发。对此，需要一种比较合适的过程模型。请对这个过程模型作出符合应用需要的选择，并说明选择理由。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210906081250463.png" alt="image-20210906081250463"></p>
+<h3 id="4-敏捷模型（Agile）"><a href="#4-敏捷模型（Agile）" class="headerlink" title="4. 敏捷模型（Agile）"></a>4. <strong>敏捷模型（Agile）</strong></h3><p>既有迭代，也有增量，便于完善工作，频繁交付。</p>
+<ul>
+<li>敏捷开发方法的宗旨是：沟通、简化、反馈、 激励。</li>
+<li>强调人的作用，构建起具有合作精神的、自组 织的、有凝聚力量的团队。</li>
+<li>敏捷开发是一种开发过程，而不是软件生命周 期模型。</li>
+</ul>
+<p>敏捷开发中，软件项目在构建初期被切分成多个子项目，各个子项目的成果都经过测试，具备可视、可集成和可运行使用的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并分别完成，在此过程中软件一直处于可使用状态。</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209114746381-1983984.png"></p>
+<p>  敏捷 = 4个价值 + 12个原则 + 很多实践 </p>
+<p>   <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209115907462-478233457.png"></p>
+<p>  传统模型：不考虑后期需求的变化就预测用户的需求，按照冻结的需求指定计划，根据制定的计划执行项目开发。<br>  敏捷模型：通过不断的反馈动态地修改用户需求来达到客户的目标，是一个自适应的过程。</p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209120850886-146337147.png"></p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209123534385-373587315.png"></p>
+<h4 id="4-1-Scrum-模型"><a href="#4-1-Scrum-模型" class="headerlink" title="4.1. Scrum 模型"></a><strong>4.1. Scrum 模型</strong></h4><pre><code>1990年代初，肯.施瓦伯在其公司使用了一种方法 Advanced Development Methods（先进开发方法），这种方法后来发展为 Scrum。
+</code></pre>
+<img src="/img/软件项目管理/生存期模型/image-20210905235551577.png" alt="image-20210905235551577" style="zoom: 200%;" />
+
+<h5 id="迭代开发过程"><a href="#迭代开发过程" class="headerlink" title="迭代开发过程"></a>迭代开发过程</h5><p>   <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209131352551-1104077209.png"></p>
+<p><a target="_blank" rel="noopener" href="https://ehzyil.github.io/2021/09/05/Scrum%E8%AE%B2%E8%A7%A3/">Scrum讲解</a></p>
+<h4 id="4-2-XP（eXtreme-Programming）"><a href="#4-2-XP（eXtreme-Programming）" class="headerlink" title="4.2 XP（eXtreme Programming）"></a><strong>4.2 XP（eXtreme Programming）</strong></h4><p>XP是由Kent Beck（1999）提出的一套针对业务需求和软件开发实践的规则.</p>
+<p> 采用简单策略，集中精力在最主要的功能上，其它可以在迭代开发中不断改进，从而避免书写大量文档。 </p>
+<p> XP采用整体价值驱动的观点，强调4个关键价值： </p>
+<ul>
+<li><p>沟通：大多数项目的失败源于沟通不畅，所以要进行一些能够推动 积极沟通的实践。</p>
+</li>
+<li><p>简单：开发能够满足客户需要的最简单的产品。</p>
+</li>
+<li><p>反馈：开发者必须要获取并且重视来自客户、系统的反馈以及相互 之间的反馈。 </p>
+</li>
+<li><p>勇气：准备好做出支持其他原则和实践的艰难决定。</p>
+</li>
+</ul>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905214541739.png" alt="image-20210905214541739"></p>
+<p>极限编程模型的最佳实践，是通过 整体实践 开发团队实践 开发者实践三个层面，一共13个核心的实践体现</p>
+ <details green="" open="" style="box-sizing: border-box; display: block; padding: 16px; margin: 1em 0px; border-radius: 4px; background: rgb(255, 255, 255); font-size: 14px; transition: all 0.28s ease 0s; border: 1px solid rgba(61, 197, 80, 0.3);"><summary style="box-sizing: border-box; display: list-item; cursor: pointer; padding: 16px; margin: -16px -16px 0px; border-radius: 4px 4px 0px 0px; color: rgb(68, 68, 68); font-weight: bold; position: relative; line-height: normal; font-size: 0.875rem !important; background: rgb(235, 249, 237); border-bottom: 1px solid rgba(61, 197, 80, 0.3);">整体实践层次包括四个实践</summary><div class="content" style="box-sizing: border-box; padding: 16px; margin: 0px -16px -16px;"><ol style="box-sizing: border-box; margin-top: 0.4rem; margin-bottom: 0px; padding: 0px 0px 0px 0.8rem; list-style: none; counter-reset: li 0;">            <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">whole Team要体现团队的意识，团队当中包括客户程序员测试员分析员，还有一个上层的经理等等，每个角色是平等的. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">Planning，并体现为并体现为两个主要计划发布计划和迭代计划. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">项Smalleleases是小版本，如果有可能，应该每天都要发布新的版本. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">customer Tests客户对每个需求都定了一些验收测试通过运行验收测试，开发人员和客户可以知道开发出来的软件是否符合需求. </li>
+</ol></div></details>
+
+ <details green="" open="" style="box-sizing: border-box; display: block; padding: 16px; margin: 1em 0px; border-radius: 4px; background: rgb(255, 255, 255); font-size: 14px; transition: all 0.28s ease 0s; border: 1px solid rgba(61, 197, 80, 0.3);"><summary style="box-sizing: border-box; display: list-item; cursor: pointer; padding: 16px; margin: -16px -16px 0px; border-radius: 4px 4px 0px 0px; color: rgb(68, 68, 68); font-weight: bold; position: relative; line-height: normal; font-size: 0.875rem !important; background: rgb(235, 249, 237); border-bottom: 1px solid rgba(61, 197, 80, 0.3);">开发团队实现层面包括五个实践</summary><div class="content" style="box-sizing: border-box; padding: 16px; margin: 0px -16px -16px;"><ol style="box-sizing: border-box; margin-top: 0.4rem; margin-bottom: 0px; padding: 0px 0px 0px 0.8rem; list-style: none; counter-reset: li 0;">            <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">collective ownership提倡大家共同来拥有代码，每个人都有权利和一来月同其他人的代码. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">coding Standard程序设计标准啊，者我们的极限编程模型，要求开发小组中，每个人都要遵守统一的编程标准，每个程序员更加容易懂其他人编写的代码. </li>
+     <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">Sustainable Pace恒定速度，要保持每周40个小时的工作时间啊，保持同一个效率. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">Metaphor是一个系统的隐喻，是以讲故事的形式，形象的图来描述系统需求. </li>
+        <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">continuous lntegration持续的集成，频繁的来整合系统，然后发布一个新的应用系统. </li>
+     </ol></div></details>
+
+ <details green="" open="" style="box-sizing: border-box; display: block; padding: 16px; margin: 1em 0px; border-radius: 4px; background: rgb(255, 255, 255); font-size: 14px; transition: all 0.28s ease 0s; border: 1px solid rgba(61, 197, 80, 0.3);"><summary style="box-sizing: border-box; display: list-item; cursor: pointer; padding: 16px; margin: -16px -16px 0px; border-radius: 4px 4px 0px 0px; color: rgb(68, 68, 68); font-weight: bold; position: relative; line-height: normal; font-size: 0.875rem !important; background: rgb(235, 249, 237); border-bottom: 1px solid rgba(61, 197, 80, 0.3);">
+开发者实践层面包括四个实现</summary><div class="content" style="box-sizing: border-box; padding: 16px; margin: 0px -16px -16px;"><ol style="box-sizing: border-box; margin-top: 0.4rem; margin-bottom: 0px; padding: 0px 0px 0px 0.8rem; list-style: none; counter-reset: li 0;">            
+     <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">简单设计，极限编程要求，用最简单的办法来实现每个小的需求，那么这些设计只要能满足当下的需求就可以了，而且所有的这些设计都将在后续的开发中被不断的重整和优化. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">Pair Programming结对编程，我们现编程中所有的代码都是由两个程序员在同一台机器上一起来编写，这样保证了所有的代码设计单元测试，至少被另外一个人复核了.</li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">Test-Driven Development测试驱动开发极限编程将测试结合到开发过程中，每次结合代码都应该运行不变，完成所有的测试. </li>
+      <li style="box-sizing: border-box; position: relative; margin: 0.2rem 0px; padding: 0.2em 0.2em 0.2em 1.4em;">Refactoring重构就是不断地对设计进行改进，我们将这个过程叫设计的重构. </li>
+</ol></div></details>
+
+<h5 id="精益（Lean）"><a href="#精益（Lean）" class="headerlink" title="精益（Lean）"></a><strong>精益（Lean）</strong></h5><pre><code>精益模式提倡持续不断地改进，减少流程中的浪费。
+</code></pre>
+<p>(分析所有流程,删除不必要的流程)</p>
+<p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905214756902.png" alt="image-20210905214756902"></p>
+<h5 id="持续交付（Continuous-delivery）"><a href="#持续交付（Continuous-delivery）" class="headerlink" title="持续交付（Continuous delivery）"></a>持续交付（Continuous delivery）</h5><p>让软件产品的产出过程在一个短周期内完成，以保证软件可以稳定、持续的保持在随时可以释出的状况。频繁的交付周期带来了更迅速地对软件的反馈，并且在这个过程当中，需求分析,设计开发,测试运维等角色可以密切的协作。</p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209133628688-21792536.png"></p>
+<p>   <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209133905111-1134554787.png"></p>
+<p>  描述：将个人代码向整体部分交付，以便尽早发现个人开发的问题</p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209134053004-1008777511.png"></p>
+<p>  描述：集成之后代码尽快向可运行环境的交付以便尽早测试</p>
+<p>  <img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/1497698-20190209134331760-855382356.png"></p>
+<p>  描述：尽快向客户交付，以便尽早发现生产环境中存在的问题</p>
+<h4 id="4-3-DevOps-Development和Operations的组合"><a href="#4-3-DevOps-Development和Operations的组合" class="headerlink" title="4.3 DevOps :Development和Operations的组合"></a><strong>4.3 DevOps</strong> :Development和Operations的组合</h4><ul>
+<li><h5 id="全程敏捷思维"><a href="#全程敏捷思维" class="headerlink" title="全程敏捷思维"></a>全程敏捷思维</h5></li>
+<li><h5 id="开发和运维工作紧密合作。"><a href="#开发和运维工作紧密合作。" class="headerlink" title="开发和运维工作紧密合作。"></a>开发和运维工作紧密合作。</h5></li>
+</ul>
+<h5 id="运维人员和开发者之间的目标差异"><a href="#运维人员和开发者之间的目标差异" class="headerlink" title="运维人员和开发者之间的目标差异"></a>运维人员和开发者之间的目标差异</h5><p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905215848401.png" alt="image-20210905215848401"></p>
+<p>交付新功能（理想质量）  产品文化（软件开发）<br>保证”运行” 应用程序（稳定性） 服务文化 (存档,监督,支持) </p>
+<p>开发者和运维人员之间目的上的差异就叫做<strong>混乱之墙</strong></p>
+<p>开发团队使用构建（Build）预算，运维团队使用运营（Run）预算。不同的预算，对控制权越来越高的需求，以及企业 IT 成本的缩水，这些因素结合在一起会进一步放大两个团队各自目的的对立性。</p>
+<h5 id="DevOps-融合一系列基本原则和实践的方法论"><a href="#DevOps-融合一系列基本原则和实践的方法论" class="headerlink" title="DevOps:融合一系列基本原则和实践的方法论"></a>DevOps:融合一系列基本原则和实践的方法论</h5><p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905215950897.png" alt="image-20210905215950897"></p>
+<p>  主要是为了消除拥有大规模 IT 部门的大型企业中，开发团队和运维团队之间由于历史原因产生的隔阂与孤立所造成的混乱现状。</p>
+<h5 id="DevOps-是一种方法论"><a href="#DevOps-是一种方法论" class="headerlink" title="DevOps:是一种方法论"></a>DevOps:是一种方法论</h5><p><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/image-20210905220423913.png" alt="image-20210905220423913"></p>
+<p>DevOps是一组过程、方法与系统的统称，用于促进开发、技术运营和质量保障（QA）部门之间的沟通、协作与整合</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ehZyiL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/">http://example.com/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">ehZyiL的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/09/05/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum%E8%AE%B2%E8%A7%A3/"><img class="next-cover" src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum/Scrum%20cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">敏捷开发之Scrum</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ehZyiL</div><div class="author-info__description">ehZyiL的博客</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ehZyiL"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ehZyiL" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/495028518@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">分享与记录</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="toc-number">1.1.</span> <span class="toc-text">生存期模型选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%A8%A1%E5%9E%8B%E5%8F%98%E8%BF%81"><span class="toc-number">1.2.</span> <span class="toc-text">软件开发模型变迁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">一、生存期模型定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B%E7%89%B9%E5%BE%81"><span class="toc-number">2.0.1.</span> <span class="toc-text">软件生存期模型特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B%E6%84%8F%E4%B9%89"><span class="toc-number">2.0.2.</span> <span class="toc-text">软件生存期模型意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B%E5%88%86%E7%B1%BB"><span class="toc-number">2.0.3.</span> <span class="toc-text">软件生存期模型分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9%E9%97%AE%E9%A2%98"><span class="toc-number">2.0.4.</span> <span class="toc-text">三、软件生命周期模型选择问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B%E5%88%86%E7%B1%BB%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.</span> <span class="toc-text">二、生存期模型分类介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A2%84%E6%B5%8B%E5%9E%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">1. 预测型模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E7%80%91%E5%B8%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.1.</span> <span class="toc-text">1.1 瀑布模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-V%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.2.</span> <span class="toc-text">1.2 V模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BF%AD%E4%BB%A3%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">3. 迭代模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A2%9E%E9%87%8F%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text">2. 增量模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%95%8F%E6%8D%B7%E6%A8%A1%E5%9E%8B%EF%BC%88Agile%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">4. 敏捷模型（Agile）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-Scrum-%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.4.1.</span> <span class="toc-text">4.1. Scrum 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="toc-number">3.4.1.1.</span> <span class="toc-text">迭代开发过程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-XP%EF%BC%88eXtreme-Programming%EF%BC%89"><span class="toc-number">3.4.2.</span> <span class="toc-text">4.2 XP（eXtreme Programming）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B2%BE%E7%9B%8A%EF%BC%88Lean%EF%BC%89"><span class="toc-number">3.4.2.1.</span> <span class="toc-text">精益（Lean）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%EF%BC%88Continuous-delivery%EF%BC%89"><span class="toc-number">3.4.2.2.</span> <span class="toc-text">持续交付（Continuous delivery）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-DevOps-Development%E5%92%8COperations%E7%9A%84%E7%BB%84%E5%90%88"><span class="toc-number">3.4.3.</span> <span class="toc-text">4.3 DevOps :Development和Operations的组合</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E7%A8%8B%E6%95%8F%E6%8D%B7%E6%80%9D%E7%BB%B4"><span class="toc-number">3.4.3.1.</span> <span class="toc-text">全程敏捷思维</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%92%8C%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C%E7%B4%A7%E5%AF%86%E5%90%88%E4%BD%9C%E3%80%82"><span class="toc-number">3.4.3.2.</span> <span class="toc-text">开发和运维工作紧密合作。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%90%E7%BB%B4%E4%BA%BA%E5%91%98%E5%92%8C%E5%BC%80%E5%8F%91%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%AE%E6%A0%87%E5%B7%AE%E5%BC%82"><span class="toc-number">3.4.3.3.</span> <span class="toc-text">运维人员和开发者之间的目标差异</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DevOps-%E8%9E%8D%E5%90%88%E4%B8%80%E7%B3%BB%E5%88%97%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99%E5%92%8C%E5%AE%9E%E8%B7%B5%E7%9A%84%E6%96%B9%E6%B3%95%E8%AE%BA"><span class="toc-number">3.4.3.4.</span> <span class="toc-text">DevOps:融合一系列基本原则和实践的方法论</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DevOps-%E6%98%AF%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95%E8%AE%BA"><span class="toc-number">3.4.3.5.</span> <span class="toc-text">DevOps:是一种方法论</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/" title="软件项目管理-生存期模型(讲解版)"><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软件项目管理-生存期模型(讲解版)"/></a><div class="content"><a class="title" href="/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/" title="软件项目管理-生存期模型(讲解版)">软件项目管理-生存期模型(讲解版)</a><time datetime="2021-09-06T04:36:08.000Z" title="发表于 2021-09-06 12:36:08">2021-09-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/05/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum%E8%AE%B2%E8%A7%A3/" title="敏捷开发之Scrum"><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum/Scrum%20cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="敏捷开发之Scrum"/></a><div class="content"><a class="title" href="/2021/09/05/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum%E8%AE%B2%E8%A7%A3/" title="敏捷开发之Scrum">敏捷开发之Scrum</a><time datetime="2021-09-05T10:42:56.000Z" title="发表于 2021-09-05 18:42:56">2021-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/05/JAVA/day06%E3%80%90Map%E3%80%91/" title="Day06"><img src="/img/java/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Day06"/></a><div class="content"><a class="title" href="/2021/09/05/JAVA/day06%E3%80%90Map%E3%80%91/" title="Day06">Day06</a><time datetime="2021-09-05T02:35:46.000Z" title="发表于 2021-09-05 10:35:46">2021-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/05/JAVA/day05-%E8%BF%AD%E4%BB%A3%E5%99%A8%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84,List,Set%20,TreeSet%E9%9B%86%E5%90%88,Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="Day05"><img src="/img/java/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Day05"/></a><div class="content"><a class="title" href="/2021/09/05/JAVA/day05-%E8%BF%AD%E4%BB%A3%E5%99%A8%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84,List,Set%20,TreeSet%E9%9B%86%E5%90%88,Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="Day05">Day05</a><time datetime="2021-09-05T02:34:46.000Z" title="发表于 2021-09-05 10:34:46">2021-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/05/JAVA/day04%E3%80%90%E5%B8%B8%E7%94%A8API%EF%BC%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%9B%E5%9E%8B%E3%80%81collection%E6%8E%A5%E5%8F%A3%E3%80%91/" title="Day04"><img src="/img/java/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Day04"/></a><div class="content"><a class="title" href="/2021/09/05/JAVA/day04%E3%80%90%E5%B8%B8%E7%94%A8API%EF%BC%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%9B%E5%9E%8B%E3%80%81collection%E6%8E%A5%E5%8F%A3%E3%80%91/" title="Day04">Day04</a><time datetime="2021-09-05T02:33:46.000Z" title="发表于 2021-09-05 10:33:46">2021-09-05</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By ehZyiL</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
