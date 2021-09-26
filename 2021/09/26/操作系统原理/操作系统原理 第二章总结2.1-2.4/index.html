@@ -1,0 +1,787 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>操作系统原理 第二章总结2.1-2.4 | ehZyiL的博客</title><meta name="keywords" content="操作系统原理,总结"><meta name="author" content="ehZyiL"><meta name="copyright" content="ehZyiL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第二章 进程管理 2.1-2.4本章要点 基础:进程描述及控制 策略:进程调度 实现:互斥与同步 避免:死锁与饥饿 饥饿:指长时间等待，没有得到回答 解决:几个经典问题 关于:进程通信  2.1进程的引入程序顺序执行 程序:源代码程序、目标程序和可执行程序号 程序执行:编辑、编译、链接、执行 程序的结构:顺序结构、分支结构和循环结构 程序顺序执行的特征:顺序性、封闭性、可再现性  程序并发执行 多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统原理 第二章总结2.1-2.4">
+<meta property="og:url" content="http://example.com/2021/09/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%80%BB%E7%BB%932.1-2.4/index.html">
+<meta property="og:site_name" content="ehZyiL的博客">
+<meta property="og:description" content="第二章 进程管理 2.1-2.4本章要点 基础:进程描述及控制 策略:进程调度 实现:互斥与同步 避免:死锁与饥饿 饥饿:指长时间等待，没有得到回答 解决:几个经典问题 关于:进程通信  2.1进程的引入程序顺序执行 程序:源代码程序、目标程序和可执行程序号 程序执行:编辑、编译、链接、执行 程序的结构:顺序结构、分支结构和循环结构 程序顺序执行的特征:顺序性、封闭性、可再现性  程序并发执行 多">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png">
+<meta property="article:published_time" content="2021-09-26T14:04:17.462Z">
+<meta property="article:modified_time" content="2021-09-26T14:28:01.434Z">
+<meta property="article:author" content="ehZyiL">
+<meta property="article:tag" content="操作系统原理">
+<meta property="article:tag" content="总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="http://example.com/2021/09/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%80%BB%E7%BB%932.1-2.4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '操作系统原理 第二章总结2.1-2.4',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-26 22:28:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiperstyle.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="ehZyiL的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ehZyiL的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">操作系统原理 第二章总结2.1-2.4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-26T14:04:17.462Z" title="发表于 2021-09-26 22:04:17">2021-09-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-09-26T14:28:01.434Z" title="更新于 2021-09-26 22:28:01">2021-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">操作系统原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="操作系统原理 第二章总结2.1-2.4"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="第二章-进程管理-2-1-2-4"><a href="#第二章-进程管理-2-1-2-4" class="headerlink" title="第二章 进程管理 2.1-2.4"></a>第二章 进程管理 2.1-2.4</h2><h3 id="本章要点"><a href="#本章要点" class="headerlink" title="本章要点"></a>本章要点</h3><ol>
+<li>基础:进程描述及控制</li>
+<li>策略:进程调度</li>
+<li>实现:互斥与同步</li>
+<li>避免:死锁与饥饿</li>
+<li>饥饿:指长时间等待，没有得到回答</li>
+<li>解决:几个经典问题</li>
+<li>关于:进程通信</li>
+</ol>
+<h3 id="2-1进程的引入"><a href="#2-1进程的引入" class="headerlink" title="2.1进程的引入"></a>2.1进程的引入</h3><h4 id="程序顺序执行"><a href="#程序顺序执行" class="headerlink" title="程序顺序执行"></a>程序顺序执行</h4><ul>
+<li>程序:源代码程序、目标程序和可执行程序<br>号</li>
+<li>程序执行:编辑、编译、链接、执行</li>
+<li>程序的结构:顺序结构、分支结构和循环结构</li>
+<li>程序顺序执行的特征:顺序性、封闭性、可再现性</li>
+</ul>
+<h4 id="程序并发执行"><a href="#程序并发执行" class="headerlink" title="程序并发执行"></a>程序并发执行</h4><ul>
+<li><p>多道程序设计技术:多个程序并发执行</p>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911112709441.png" alt="image-20210911112709441"></p>
+</li>
+<li><p>程序并发执行时的特征:间断性、非封闭性、不可再现性</p>
+</li>
+</ul>
+<h5 id="程序并发执行引发的问题"><a href="#程序并发执行引发的问题" class="headerlink" title="程序并发执行引发的问题"></a>程序并发执行引发的问题</h5><ul>
+<li>协调各程序的执行顺序<pre><code>例如,当输入的数据还未全部输入内存时，计算必须等待
+</code></pre>
+多个执行程序共享系统资源，程序之间可能会相互影响，甚至影响输出结果</li>
+<li>选择哪些、多少个程序进入内存执行?</li>
+<li>内存中的执行程序谁先执行,谁后执行?</li>
+<li>内存如何有效分配?</li>
+</ul>
+<h4 id="进程的概念"><a href="#进程的概念" class="headerlink" title="进程的概念"></a>进程的概念</h4><ul>
+<li>定义:可并发执行的程序,在一个数据集合上的运行过程。</li>
+<li>申请/拥有资源 调度(线程)</li>
+<li>程序:静态概念,是指令和数据的集合,可长期存储</li>
+<li>进程与程序对应关系:<pre><code>一个程序可以对应一个进程或多个进程
+一个进程可以对应一个程序，或者一段程序
+</code></pre>
+</li>
+</ul>
+<h4 id="进程的特征"><a href="#进程的特征" class="headerlink" title="进程的特征"></a>进程的特征</h4><ul>
+<li>动态性</li>
+<li>并发性</li>
+<li>独立性</li>
+<li>异步性</li>
+</ul>
+<h4 id="引入进程带来的问题"><a href="#引入进程带来的问题" class="headerlink" title="引入进程带来的问题"></a>引入进程带来的问题</h4><ul>
+<li>增加了空间开销:为进程建立数据结构</li>
+<li>额外的时间开销:管理和协调、跟踪、填写和更新有关数据结构、切换进程、保护现场</li>
+<li>更难控制:<pre><code>-协调多个进程竞争和共享资源如何预防
+</code></pre>
+   -解决多个进程因为竞争资源而出现故障</li>
+<li>处理机的竞争尤为突出</li>
+</ul>
+<h4 id="进程的结构"><a href="#进程的结构" class="headerlink" title="进程的结构"></a>进程的结构</h4><ul>
+<li>组成:(进程映像):程序、数据集合、进程控制块PCB (Process Control Block)</li>
+<li>PCB是进程存在的唯一标志。创建进程时,创建PCB;进程结束时，系统将撤消其PCB</li>
+</ul>
+<h4 id="PCB"><a href="#PCB" class="headerlink" title="PCB"></a>PCB</h4><ul>
+<li>进程标识信息:进程的内部和外部标识符</li>
+<li>处理机状态信息:通用寄存器值、指令计数器值、程序状态字PSW值、用户栈指针值</li>
+<li>进程调度信息:进程状态、进程优先权、进程调度的其它信息</li>
+<li>其它信息:程序及数据地址、进程同步和通讯机制、资源清单、链接指针</li>
+</ul>
+<h5 id="PCB的组织方式之一-单一队列"><a href="#PCB的组织方式之一-单一队列" class="headerlink" title="PCB的组织方式之一 单一队列"></a>PCB的组织方式之一 单一队列</h5><ul>
+<li>所有进程的PCB通过链表组织成为一个单一队列。适用于进程数目不多的系统。如，Windows操作系统。</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/mage-20210911170654392.png" alt="image-20210911170654392"></p>
+<h5 id="PCB的组织方式之二-表格结构"><a href="#PCB的组织方式之二-表格结构" class="headerlink" title="PCB的组织方式之二 表格结构"></a>PCB的组织方式之二 表格结构</h5><ul>
+<li>PCB按进程状态不同,组织成不同的表格:就绪进程表、执行进程表（多机系统中)及阻塞进程表</li>
+<li>系统分别记载各PCB表的起始地址</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911113206845.png" alt="image-20210911113206845"></p>
+<h5 id="PCB的组织方式之三-多级队列"><a href="#PCB的组织方式之三-多级队列" class="headerlink" title="PCB的组织方式之三 多级队列"></a>PCB的组织方式之三 多级队列</h5><ul>
+<li>PCB按进程状态不同用链接指针组成不同队列:就绪进程队列、阻塞进程队列(可按阻塞原因不同,分别组织)</li>
+<li>系统分别记载各PCB链表的起始地址</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911113249776.png" alt="image-20210911113249776"></p>
+<h3 id="2-2进程的状态"><a href="#2-2进程的状态" class="headerlink" title="2.2进程的状态"></a>2.2进程的状态</h3><h4 id="进程执行轨迹"><a href="#进程执行轨迹" class="headerlink" title="进程执行轨迹"></a>进程执行轨迹</h4><ul>
+<li><p>进程的轨迹:进程执行的指令序列,用以观察处理机的执行过程。</p>
+</li>
+<li><p>例，假设内存中有3个进程A、B、C，他们的程序代码已全部装入内存。若A、B两进程需要执行12条指令，C进程需要执行4条指令，且C进程执行到第4条指令处必须等待</p>
+</li>
+<li><p>假设分派程序分派处理机需要依<br>指令序列:s+0,s+1,,s+5</p>
+</li>
+<li><p>进程A的执行轨迹为a+0,a+1,a+2,a+3,</p>
+</li>
+<li><p>进程B的执行轨迹为b+0,b+1,b+2,b+3,</p>
+</li>
+<li><p>进程C的执行轨迹为c+0,c+ 1,c+2,c+3,当它执行到c+3指令时遇到了IO指令，需要释放处理机，进行输入/输出操作</p>
+</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911113433068.png" alt="image-20210911113433068"></p>
+<h4 id="两状态进程模型"><a href="#两状态进程模型" class="headerlink" title="两状态进程模型"></a>两状态进程模型</h4><ul>
+<li><p>两状态:执行、未执行</p>
+</li>
+<li><p>进程获得处理机,进入执行状态;当时间片结束或其它某种原因,进程释放处理机，暂停执行,处于未执行状态。</p>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911113621308.png" alt="image-20210911113621308"></p>
+</li>
+</ul>
+<h4 id="两状态进程模型-队列形式"><a href="#两状态进程模型-队列形式" class="headerlink" title="两状态进程模型:队列形式"></a>两状态进程模型:队列形式</h4><p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911113645644.png" alt="image-20210911113645644"></p>
+<p><strong>注:</strong></p>
+<ul>
+<li>并非所有进程只要“未执行”就处于就绪( ready),有的需要阻塞（ blocked )等待IO完成</li>
+<li>“未执行”又可分为就绪和阻塞</li>
+</ul>
+<h4 id="进程的五状态"><a href="#进程的五状态" class="headerlink" title="进程的五状态"></a>进程的五状态</h4><ul>
+<li>执行状态（Running)</li>
+<li>就绪状态（Ready)</li>
+<li>阻塞状态（Blocked)</li>
+<li>新状态（New)</li>
+<li>终止状态（Terminated）</li>
+</ul>
+<ol>
+<li>新状态:进程已经创建。但未被0S接纳为可执行进程</li>
+<li>就绪状态:准备执行</li>
+<li>执行状态:占用处理机(单处理机环境中,某一时刻仅一个进程占用处理机)</li>
+<li>阻塞状态:等待某事件发生才能执行,如等待I/0完成等</li>
+<li>终止状态:因停止或取消,被OS从执行状态释放</li>
+</ol>
+<p>&lt;/img src=”/img/操作系统原理/第二章/image-20210911113813732.png” alt=”image-20210911113813732” style=”zoom: 67%;” /&gt;</p>
+<ol>
+<li>空→新状态     新创建的进程首先处于新状态。</li>
+<li>新状态→就绪状态      当系统允许增加就绪进程时，操作系统接纳新建状态进程，将它变为就绪状态，插入就绪队列中。</li>
+<li>就绪状态→执行状态    当处理机空闲时，将从就绪队列中选择一个进程执行，该选择过程称为进程调度，或将处理机分派给一个进程，该进程状态从就绪转变为执行。</li>
+<li>执行状态→终止状态   执行状态的进程执行完毕，或出现诸如访问地址越界、非法指令等错误，而被异常结束，则进程从执行状态转换为终止状态。</li>
+<li>执行状态→就绪状态    分时系统中，时间片用完，或优先级高的进程到来，将中断较低优先级进程的执行。进程从执行状态转变为就绪状态，等待下一次调度。</li>
+<li>执行状态→阻塞状态   执行进程需要等待某事件发生。通常，会因为进程需要的系统调用不能立即完成，如读文件、共享虚拟内存、等待I/0操作、等待另一进程与之通信等事件而阻塞。</li>
+<li>阻塞状态→就绪状态   当阻塞进程等待的事件发生，就转换为就绪状态。进入就绪队列排队,等待被调度执行。</li>
+</ol>
+<p><strong>注:</strong></p>
+<ul>
+<li><p>某些系统允许父进程在任何情况下终止其子进程。</p>
+</li>
+<li><p>如果一个父进程被终止，其子孙进程都必须终止。<br> 新状态→终止</p>
+<pre><code>      就绪状态→终止
+      阻塞状态→终止
+</code></pre>
+</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911114402709.png" alt="image-20210911114402709"></p>
+<h4 id="问题-多个进程竞争内存资源"><a href="#问题-多个进程竞争内存资源" class="headerlink" title="问题:多个进程竞争内存资源"></a>问题:多个进程竞争内存资源</h4><ul>
+<li>内存资源紧张</li>
+<li>无就绪进程,处理机空闲:I/0的速度比处理机的速度慢得多，可能出现全部进程阻塞等待I/0</li>
+</ul>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><ul>
+<li>采用交换技术:换出一部分进程到外存,以腾出内存空间</li>
+<li>采用虚拟存储技术:每个进程只能装入一部分程序和数据(存储管理部分)</li>
+</ul>
+<h4 id="对换技术-交换技术-Swapping"><a href="#对换技术-交换技术-Swapping" class="headerlink" title="对换技术,交换技术(Swapping )"></a>对换技术,交换技术(Swapping )</h4><p>将内存中暂时不能运行的进程，或暂时不用的<strong>数据和程序</strong>，<strong>换出</strong>到外存，以腾出足够的内存空间，把已具备运行条件的进程，或进程所需要的数据和程序，<strong>换入</strong>内存。</p>
+<p>PCB不能换出去。(因为PCB是系统唯一感知进程的标志)</p>
+<h4 id="进程的挂起状态"><a href="#进程的挂起状态" class="headerlink" title="进程的挂起状态"></a>进程的挂起状态</h4><ul>
+<li>进程被交换到外存，状态变为挂起状态</li>
+</ul>
+<h4 id="进程挂起的原因"><a href="#进程挂起的原因" class="headerlink" title="进程挂起的原因"></a>进程挂起的原因</h4><ul>
+<li>进程全部阻塞，处理机空闲。</li>
+<li>系统负荷过重，内存空间紧张。</li>
+<li>操作系统的需要。操作系统可能需要挂起后台进程或一些服务进程（如打印进程)，或者某些可能导致系统故障的进程。</li>
+<li>终端用户的请求。</li>
+<li>父进程的需求。</li>
+</ul>
+<h4 id="被挂起进程的特征"><a href="#被挂起进程的特征" class="headerlink" title="被挂起进程的特征"></a>被挂起进程的特征</h4><ul>
+<li>不能立即执行</li>
+<li>可能是等待某事件发生,若是，则阻塞条件独立于挂起条件，即使阻塞事件发生，该进程也不能执行。阻塞和挂起没有联系。</li>
+<li>使之挂起的进程为:自身、其父进程、0S</li>
+<li>只有挂起它的进程才能使之由挂起状态转换<br>为其他状态</li>
+</ul>
+<h4 id="挂起与阻塞"><a href="#挂起与阻塞" class="headerlink" title="挂起与阻塞"></a>挂起与阻塞</h4><p><strong>问题</strong></p>
+<ol>
+<li>是否只能挂起阻塞进程?</li>
+<li>如何激活一个挂起进程?</li>
+</ol>
+<ul>
+<li>区分两个概念;<br> 进程是否等待事件，阻塞与否<br> 进程是否被换出内存，挂起与否 </li>
+<li>4种状态组合:<br><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911120141197.png" alt="image-20210911120141197"></li>
+</ul>
+<p><strong>注:</strong><br>处理机可调度执行的进程有两种:</p>
+<ul>
+<li><strong>新创建的进程</strong></li>
+<li><strong>或换入一个以前挂起的进程</strong><br>通常为避免增加系统负载，系统会<strong>换入一个以前挂起的进程</strong>执行。</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911114656533.png" alt="image-20210911114656533"></p>
+<h4 id="具有挂起状态的进程状态转换"><a href="#具有挂起状态的进程状态转换" class="headerlink" title="具有挂起状态的进程状态转换"></a>具有挂起状态的进程状态转换</h4><ul>
+<li><strong>阻塞→阻塞/挂起</strong> :OS通常将阻塞进程换出，以腾出内存空间</li>
+<li><strong>阻塞/挂起→就绪/挂起</strong>:当<strong>阻塞/挂起</strong>进程等待的事件发生时，可以将其转换为<strong>就绪/挂起</strong></li>
+<li><strong>就绪/挂起→就绪</strong>:OS需要调入一个进程执行</li>
+<li><strong>就绪→就绪/挂起</strong>:一般，OS挂起阻塞进程。但有时也会挂起就绪进程，释放足够的内存空间</li>
+<li><strong>新→就绪/挂起（新→就绪）</strong>:新进程创建后，可以插入到就绪队列或就绪，挂起队列。若无足够的内存分配给新进程，则需要<strong>新→就绪/挂起</strong></li>
+<li><strong>阻塞/挂起→阻塞</strong>:当阻塞/挂起队列中有一个进程的阻塞事件可能会很快发生，则可将一个阻塞/挂起进程换入内存，变为阻塞</li>
+<li><strong>执行→就绪/挂起</strong>:当执行进程的时闻片用完<br>时，会转换为<strong>就绪</strong>。或一个高优先级的阻塞/挂起进程正好变为非阻塞状态，0S可以将执行进程转换为<strong>就绪/挂起</strong>状态</li>
+<li><strong>所有状态→终止</strong>:通常,<strong>执行→终止</strong>。,但某些OS中,父进程可以终止其子进程，使在何状态的进程都可转换为退出状态</li>
+</ul>
+<h3 id="2-3进程的控制"><a href="#2-3进程的控制" class="headerlink" title="2.3进程的控制"></a>2.3进程的控制</h3><h4 id="两种执行模式"><a href="#两种执行模式" class="headerlink" title="两种执行模式"></a>两种执行模式</h4><ul>
+<li>系统模式(又称为系统态）、控制模式或内核模式:<pre><code>-具有较高的特权
+     -运行系统特定的指令,包括读/写控制寄存器的指令、基本I/0指令以及与存储器管理有关的指令，及一些特定的内存区
+     -内核模式下的处理机及其指令、寄存器和内存都受到完全控制和保护
+</code></pre>
+</li>
+<li>用户模式(或用户态)<pre><code>-具有较低的特权
+–用户程序一般运行在用户模式
+</code></pre>
+</li>
+</ul>
+<h4 id="模式切换"><a href="#模式切换" class="headerlink" title="模式切换"></a>模式切换</h4><ul>
+<li><p>用户模式→系统模式:用户程序执行到一条系统调用，进入操作系统内核执行</p>
+</li>
+<li><p>系统模式→用户模式:执行完系统调用的功能，返回到用户程序</p>
+</li>
+<li><p>特殊情况:程序执行到结束语句时，切换到系统模式，不再返回到用户程序</p>
+</li>
+</ul>
+<h4 id="操作系统内核（Kernel"><a href="#操作系统内核（Kernel" class="headerlink" title="操作系统内核（Kernel)"></a>操作系统内核（Kernel)</h4><ul>
+<li>操作系统的核心，是基于硬件的第一层软件扩充，提供操作系统最基本的功能，是操作系统工作的基础。</li>
+<li>现代操作系统设计中，为减少系统本身的开销，往往将一些与硬件紧密相关的（如中断处理程序、设备驱动程序等)、基本的、公共的、运行频率较高的模块（如时钟管理、进程调度等)以及关键性数据结构独立开来，使之常驻内存，并对它们进行特殊保护。通常把这一部分称为操作系统的内核。</li>
+<li>用户通过系统调用访问操作系统的功能，这些功能最终都通过操作系统内核实现。</li>
+<li>一般地，操作系统内核的功能可以概括地划分为资源管理功能和支撑功能。<pre><code>–资源管理:进程管理、存储管理和I/0设备管理
+–支撑功能:中断处理、统计、监测、时钟管理、原语操作等。
+</code></pre>
+</li>
+</ul>
+<h5 id="资源管理功能"><a href="#资源管理功能" class="headerlink" title="资源管理功能"></a>资源管理功能</h5><ul>
+<li>进程管理:进程创建和终止、调度、状态转换、同步和通信、管理PCB</li>
+<li>存储管理:为进程分配地址空间、对换、段/页管理</li>
+<li>I/0设备管理:缓存管理、为进程分配I/0通道和设备</li>
+</ul>
+<h5 id="支撑功能"><a href="#支撑功能" class="headerlink" title="支撑功能"></a>支撑功能</h5><ul>
+<li>中断处理</li>
+<li>时钟管理</li>
+<li>原语( Primitive ) :原子操作</li>
+<li>统计</li>
+<li>监测</li>
+</ul>
+<h6 id="进程控制原语"><a href="#进程控制原语" class="headerlink" title="进程控制原语"></a>进程控制原语</h6><ul>
+<li>进程切换</li>
+<li>创建与终止</li>
+<li>阻塞与唤醒</li>
+<li>挂起与激活</li>
+</ul>
+<h4 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h4><h5 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h5><ul>
+<li>提交新的批处理作业</li>
+<li>交互式用户注册</li>
+<li>操作系统提供服务</li>
+<li>父进程创建子进程</li>
+</ul>
+<h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ul>
+<li>为进程分配一个唯一标识号D主进程表中增加一个新的表项</li>
+<li>为进程分配空间:用户地址空间、用户栈空<br>间、PCB空间。若共享已有空间，则应建立相应的链接</li>
+<li>初始化PCB:进程标识、处理机状态信息、进程状态</li>
+<li>建立链接:若调度队列是链表,则将新进程插入到就绪或就绪/挂起链表</li>
+<li>建立或扩展其他数据结构</li>
+</ul>
+<h4 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h4><h5 id="原因-1"><a href="#原因-1" class="headerlink" title="原因"></a>原因</h5><ul>
+<li>批处理作业执行到“结束”语句</li>
+<li>交互式用户“注销”</li>
+<li>停止进程（应用程序）的执行</li>
+<li>遇到错误或故障</li>
+</ul>
+<h5 id="具体原因"><a href="#具体原因" class="headerlink" title="具体原因"></a>具体原因</h5><ul>
+<li>正常结束</li>
+<li>超时终止,执行时间超过预计时间</li>
+<li>内存不足,无法为进程分配所需的内存空间</li>
+<li>越界访问</li>
+<li>企图使用未允许用的数据，或操作方式错计算错，如除零,或企图存储硬件允许的最大数</li>
+<li>超时等待某事件发生</li>
+<li>I/0失败,如找不到文件或多次重试仍无法读写文件，或无效操作</li>
+<li>无效指令,企图执行不存在的指令</li>
+<li>特权指令,企图执行特权指令</li>
+<li>数据类型不符，或未初始化</li>
+<li>操作员或OS干预，如发生死锁的时候</li>
+<li>父进程终止</li>
+<li>父讲程清求</li>
+</ul>
+<h5 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h5><ul>
+<li>根据被终止进程的标识符ID，找到其PCB，读出该进程的状态;</li>
+<li>若该进程为执行状态，则终止其执行，调度新进程执行;</li>
+<li>若该进程有子孙进程，则立即终止其所有子孙进程将该进程的全部资源,或归还给其父进程，或归还给系统</li>
+<li>将被终止进程(的PCB)从所在的队列中移出，等待其它程序来搜集信息</li>
+</ul>
+<h4 id="进程的阻塞与唤醒"><a href="#进程的阻塞与唤醒" class="headerlink" title="进程的阻塞与唤醒"></a>进程的阻塞与唤醒</h4><ul>
+<li>阻塞原因:请求系统服务:启动某种操作，<br>如IO;新数据尚未到达;暂时无新工作可做等</li>
+<li>当出现阻塞事件,进程调用阻塞原语将自己阻塞。并将其状态变为“阻塞状态”,并进入相应事件的阻塞队列;</li>
+<li>当阻塞进程期待的事件发生,有关进程调用<br>唤醒原语，将等待该事件的进程唤醒。并将其状态变为“就绪状态”，插入就绪队列。</li>
+<li>一般,进程可以自己阻塞自己;而唤醒操作则由操作系统，或其它相关进程来完成,进程无法自己唤醒自己。</li>
+</ul>
+<h4 id="进程的挂起与激活"><a href="#进程的挂起与激活" class="headerlink" title="进程的挂起与激活"></a>进程的挂起与激活</h4><ul>
+<li>当出现挂起事件，系统利用挂起原语将指定进程或一个阻塞进程挂起。进程从内存换出到外存，其状态转换:就绪→就绪/挂起或阻塞→阻塞/挂起</li>
+<li>当激活事件发生,系统利用激活原语将指定进程激活。将相应进程从外存换入到内存，可能的状态转换:就绪/挂起→就绪，或阻塞/挂起→阻塞</li>
+</ul>
+<h4 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a>进程切换</h4><ul>
+<li>时钟中断<pre><code>-进程执行完一个时间片
+</code></pre>
+</li>
+<li>I/0中断<br>内存访问出错<pre><code>-虚拟存储中，需要的指令或数据不在内存
+</code></pre>
+</li>
+<li>陷阱<pre><code>-执行遇到错误
+-可能使进程转换到终止状态
+</code></pre>
+</li>
+</ul>
+<h4 id="进程A切换到进程B的步骤"><a href="#进程A切换到进程B的步骤" class="headerlink" title="进程A切换到进程B的步骤"></a>进程A切换到进程B的步骤</h4><ul>
+<li>首先,保护进程A的现场将进程A的当前运行信息，如程序执行到的当前位置，程序状态字，所有的寄存器值等保存到进程A的PCB中。</li>
+<li>然后，恢复进程B的现场从进程B的PCB中获取其执行信息，将这些信息写入相应的寄存器中，程序计数器指向进程B将执行的下一条指令。进程B可能第一次开始执行，也可能是被中断过的进程,恢复执行。不论是哪一种情况，进程B的执行信息都能在其PCB中找到。</li>
+</ul>
+<h4 id="进程切换vs模式切换"><a href="#进程切换vs模式切换" class="headerlink" title="进程切换vs模式切换"></a>进程切换vs模式切换</h4><ul>
+<li>进程切换,作用于进程之间的一种操作。当分派程序收回当前进程的CPU并准备把它分派给某个就绪进程时，该操作将被引用。</li>
+<li>模式切换,是进程内部所引用的一种操作。当用户程序转入系统调用，或相反时，该操作将被引用。</li>
+<li>进程切换一定引发模式切换，反之则不然。</li>
+</ul>
+<h3 id="2-4-进程调度"><a href="#2-4-进程调度" class="headerlink" title="2.4 进程调度"></a>2.4 进程调度</h3><h4 id="什么是调度"><a href="#什么是调度" class="headerlink" title="什么是调度?"></a>什么是调度?</h4><p>调度是指，在一个队列中，按照某种方法（算法），选择一个合适的个体的过程。<br>调度的关键是需要某种方法或算法，好的调度算法有利于选择到合适的个体。如何判断、设计一个好的调度算法呢?</p>
+<h4 id="调度目标"><a href="#调度目标" class="headerlink" title="调度目标"></a>调度目标</h4><ul>
+<li>公平性，防止进程长期不能获得调度而饥饿;</li>
+<li>处理机利用率,尽量提高处理机的利用率;</li>
+<li>提高系统吞吐量;</li>
+<li>尽量减少进程的响应时间</li>
+</ul>
+<h4 id="调度原则"><a href="#调度原则" class="headerlink" title="调度原则"></a>调度原则</h4><ul>
+<li>满足用户的要求:响应时间、周转时间、截止时间</li>
+<li>满足系统的需求:系统吞吐量、处理机利用率、各类资源的平衡使用、公平性及优先级</li>
+</ul>
+<h5 id="面向用户的原则-响应时间"><a href="#面向用户的原则-响应时间" class="headerlink" title="面向用户的原则:响应时间"></a>面向用户的原则:响应时间</h5><ul>
+<li>是指,从用户通过键盘提交一个请求开始，直到系统首次产生响应为止的时间。</li>
+<li>输入的请求传送到处理机的时间＋处理机对请求信息进行处理的时间+将响应结果发送到输出终端的时间</li>
+<li>调度算法则应考虑尽可能使绝大多数用户的请求能在响应时间内完成。</li>
+<li>常用于评价分时系统的性能。</li>
+</ul>
+<h5 id="面向用户的原则-周转时间"><a href="#面向用户的原则-周转时间" class="headerlink" title="面向用户的原则:周转时间"></a>面向用户的原则:周转时间</h5><ul>
+<li><p>指从作业提交给系统开始，到作业完成为止的这段时间间隔<br>作业在外存排队等待调度的时间+进程在就绪队列中等待调度的时间+进程被处理机执行的时间<br>+等待I/0操作完成的时间</p>
+</li>
+<li><p>常用于评价批处理系统的性能</p>
+</li>
+<li><p>影响周转时间的调度:</p>
+<pre><code>作业从外存调度到内存（作业调度)
+进入内存还需在就绪队列中排队，等待进程调度。
+甚至，可能会挂起进程，在外存等待被激活（中程调度)
+</code></pre>
+</li>
+</ul>
+<h5 id="面向用户的原则-截止时间"><a href="#面向用户的原则-截止时间" class="headerlink" title="面向用户的原则:截止时间"></a>面向用户的原则:截止时间</h5><ul>
+<li>指实时系统中，某任务必须开始执行的最迟时间(开始截止时间)，或必须完成的最迟时间（完成截止时间)。</li>
+<li>常用于评价实时系统的性能。</li>
+</ul>
+<h5 id="面向系统的原则-系统吞吐量"><a href="#面向系统的原则-系统吞吐量" class="headerlink" title="面向系统的原则:系统吞吐量"></a>面向系统的原则:系统吞吐量</h5><ul>
+<li>指单位时间内系统所完成的作业数</li>
+<li>常用于评价批处理系统的性能。</li>
+</ul>
+<h5 id="面向系统的原则-处理机利用率"><a href="#面向系统的原则-处理机利用率" class="headerlink" title="面向系统的原则:处理机利用率"></a>面向系统的原则:处理机利用率</h5><ul>
+<li>大、中型多用户系统，由于处理机价格昂贵，处理机利用率是衡量系统性能的一个重要指标</li>
+<li>单用户微机或某些实时系统，则并非很重要。</li>
+</ul>
+<h5 id="面向系统的原则-各类资源的平衡使用"><a href="#面向系统的原则-各类资源的平衡使用" class="headerlink" title="面向系统的原则:各类资源的平衡使用"></a>面向系统的原则:各类资源的平衡使用</h5><ul>
+<li>多道程序系统的目标之一就是为了提高系统资源的利用率，因此，调度算法有责任使系统中的各种资源都尽量处于忙碌状态。</li>
+<li>该原则同时适用于长程调度和中程调度,因为它们可以决定哪些筰业(进程）可以进入内存，可以考虑系统资源的均衡使用。（不适合进程调度因为它已经得到了相应的资源只差处理机了，因此不考虑资源的使用)</li>
+</ul>
+<h5 id="面向系统的原则-公平性"><a href="#面向系统的原则-公平性" class="headerlink" title="面向系统的原则:公平性"></a>面向系统的原则:公平性</h5><ul>
+<li>调度算法应该对所有进程公平，不偏袒任何进程。</li>
+</ul>
+<h5 id="面向系统的原则-优先权"><a href="#面向系统的原则-优先权" class="headerlink" title="面向系统的原则:优先权"></a>面向系统的原则:优先权</h5><ul>
+<li>优先权高的进程应优先调度</li>
+<li>可以根据进程的优先权不同，组织不同的就绪队列。进程调度时首先选择高优先权队列中的进程，直到该队列空，再调度较低优先权队列中的进程，如图2.13所示</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210913231544429.png" alt="image-20210913231544429"></p>
+<ul>
+<li> 几乎所有操作系统的调度算法都可考虑优先权原则。</li>
+<li> 当然,仅考虑优先权，可能会出现饥饿，对低优先权的进程不公平。</li>
+<li> 可以将进程排队的等待时间等因素纳入优先权的计算，随着进程等待时间的增长，其优先权也不断提高,进程也会在不久的将来得到调度。</li>
+</ul>
+<h4 id="进程调度方式"><a href="#进程调度方式" class="headerlink" title="进程调度方式"></a>进程调度方式</h4><p>根据执行进程的处理机是由进程自己释放，还是被强行剥夺，可以将进程调度方式分为<strong>非剥夺方式</strong>和剥夺方式两种。</p>
+<h5 id="进程调度方式-非剥夺方式"><a href="#进程调度方式-非剥夺方式" class="headerlink" title="进程调度方式:非剥夺方式"></a>进程调度方式:非剥夺方式</h5><ul>
+<li>执行进程只有在执行完毕，或因申请I/O阻塞自己时，才中断其执行，释放处理机，调度新的进程执行</li>
+<li>这种方式不利于“即时性”要求较高的分时和实时系统，主要用于批处理系统。</li>
+</ul>
+<h5 id="进程调度方式-剥夺方式"><a href="#进程调度方式-剥夺方式" class="headerlink" title="进程调度方式:剥夺方式"></a>进程调度方式:剥夺方式</h5><ul>
+<li>操作系统可以在新进程到来时，或某个具有较高优先权的被阻塞进程插入就绪队列时，或在基于时间片调度的系统中，时间片用完而中断当前进程的执行，调度新的进程执行。</li>
+<li>这种方式会产生较多的中断，主要用于实时性要求较高的实时系统及性能要求较高的批处理系统和分时系统。</li>
+</ul>
+<h4 id="调度的类型"><a href="#调度的类型" class="headerlink" title="调度的类型"></a>调度的类型</h4><ul>
+<li>批处理调度、分时调度、实时调度和多处理机调度</li>
+<li>长程调度(作业调度要创建新进程)、中程调度（(挂起，激活不用创建新进程）、短程调度（进程调度)<br>I/0调度</li>
+</ul>
+<h5 id="长程调度-Long-term-scheduling）"><a href="#长程调度-Long-term-scheduling）" class="headerlink" title="长程调度(Long-term scheduling）"></a>长程调度(Long-term scheduling）</h5><ul>
+<li>又称高级调度,或作业调度，它为被调度作业或用户程序创建进程，分配必要的系统资源，并将新创建的进程插入就绪队列，等待短程调度。</li>
+<li>某些采用交换技术的系统将新创建的进程插入到就绪/挂起队列，等待中程调度。</li>
+<li>在批处理系统中，作业进入系统后，先驻留在磁盘上，组织成批处理队列，称为后备队列。长程调度从该队列中选择一个或多个作业，为之创建进程。如图:</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210913231827192.png" alt="image-20210913231827192"></p>
+<h6 id="长程调度需要考虑两个问题"><a href="#长程调度需要考虑两个问题" class="headerlink" title="长程调度需要考虑两个问题"></a>长程调度需要考虑两个问题</h6><ol>
+<li>选择多少个作业进入内存，为之创建进程?<br>取决于多道程序的度，即允许同时在内存中运行的进程数。</li>
+<li>选择哪些作业?<br>取决于长程调度算法</li>
+</ol>
+<h5 id="短程调度-Short-term-scheduling"><a href="#短程调度-Short-term-scheduling" class="headerlink" title="短程调度(Short-term scheduling)"></a>短程调度(Short-term scheduling)</h5><ul>
+<li>也称进程调度，或低级调度，决定就绪队列中的哪个进程将获得处理机。</li>
+<li>短程调度运行频率最高。</li>
+<li>现代操作系统几乎都具有短程调度功能。</li>
+</ul>
+<h5 id="中程调度-Medium-term-scheduling）"><a href="#中程调度-Medium-term-scheduling）" class="headerlink" title="中程调度(Medium-term scheduling）"></a>中程调度(Medium-term scheduling）</h5><ul>
+<li>又称为中级调度。它是对换功能的一部分。</li>
+<li>当内存空间非常紧张时，或处理机找不到一不司执行的就绪进程时，需要选择一个进程（阻塞或就绪状态)换出到外存，释放出内存空间给别的进程使用;当内存空间较充裕时，从外存选择一个挂起状态的进程调度到内存（换入），见图。</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210913231925800.png" alt="image-20210913231925800"></p>
+<ul>
+<li>目的:为了提高内存的利用率和系统吞吐量。</li>
+<li>只有支持进程挂起的操作系统才具有中程调度功能。</li>
+</ul>
+<h4 id="进程调度算法-先来先服务（FCFS"><a href="#进程调度算法-先来先服务（FCFS" class="headerlink" title="进程调度算法-先来先服务（FCFS)"></a>进程调度算法-先来先服务（FCFS)</h4><ul>
+<li>该方法按照进程到达的先后顺序排队,每次调度队首的进程。</li>
+<li>FCFS算法属于非剥夺调度方式，实现简单，看似公平。</li>
+<li>但，对于那些后进入队列而运行时间较短的进程，或I/0型的进程而言，可能需要长时间等待。</li>
+</ul>
+<p><strong>分析前面列举的幼儿园一组小孩进食的例子:</strong></p>
+<ul>
+<li>如果采用FCFS方法,让全部小孩排成一个先进先出的队列，老师从队首开始逐个给小孩喂食，只有当前一个小孩吃饱了，才喂食下一个小孩。那么，排在队列后面的的小孩将长时间不能被喂食而饥饿。</li>
+<li>特别地，如果排在队列前面的某些小孩需要喂食的时间较长，而排在队列后面的某些小孩只需进食很少的饭量，却需要等待很长的时间。故，该方法对这样的小孩不公平。</li>
+</ul>
+<p><strong>假设</strong><br>就绪队列中从队首开始依次排列有四个进程P1，P2，P3和P4（假设它们同时到达就绪队列），它们的预计执行时间分别为16，12，4和3个单位时间。若采用FCFS方法调度，试计算P1，P2，P3和P4的周转时间分别为多少?平均周转时间是多少?</p>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210913232037792.png" alt="image-20210913232037792"></p>
+<ul>
+<li>对短进程不公平。</li>
+<li>由于长进程可能排在队列前面,必将增加队列后部进程的等待时间，从而将增加平均周转时间。</li>
+<li>不利于I/0型进程，未有效利用系统资源。</li>
+<li>一般地,FCFS与其他调度算法混合使用。例如，系统可以按照不同的优宪级维护多个就绪队列，每个队列内部按照FCFS算法调度。 </li>
+<li>FCFS算法同时适合于长程、中程和短程调度三种调度类型。</li>
+</ul>
+<h4 id="短进程优先"><a href="#短进程优先" class="headerlink" title="短进程优先"></a>短进程优先</h4><pre><code>当需要调度进程(或作业）时，通过计算判断就绪进程队列中哪一个进程的预期执行时间最短，或后备作业队列中哪一个或几个作业的预期执行时间最短，就调度谁。
+</code></pre>
+<p><strong>属于非剥夺调度算法。</strong>当某进程获得处理机，直到其执行完成，或需要等待某事件而阻塞时，才自动释放处理机。系统又调度新的进程（或作业)。<br>若采用短进程优先算法调度上例的4个进程，按照进程预期执行时间排序（升序)为P4，P3，P2，P1，试分别计算4个进程的周转时间和他们的平均周转时间。</p>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210913232156039.png" alt="image-20210913232156039"></p>
+<ul>
+<li>与FCFS算法比较,短进程优先调度算法改善了系统的性能，降低了系统的平均等待时间，提高了系统的吞吐量。但是，该算法也存在一些问题:</li>
+</ul>
+<p>1)很难准确预测进程的执行时间;<br>⑵可能导致长进程饥饿，这对长进程不公平;3)采用非剥夺调度方式，未考虑进程的紧迫程度，不适合于分时系统和事务处理系统。</p>
+<h4 id="时间片轮转调度法"><a href="#时间片轮转调度法" class="headerlink" title="时间片轮转调度法"></a>时间片轮转调度法</h4><p>例如<br>在一个分时联机系统中，同时有n个人通过各自的终端共享一台主机（服务器）。终端完成输入/输出操作，主机负责处理从终端发来的请求，为之建立进程、协调各进程的运行、调度各个进程等，并尽量满足每个终端用户对响应时间的要求。</p>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911115401323.png" alt="image-20210911115401323"></p>
+<ul>
+<li>在分时联机系统中,n个进程循环地获得时间片而执行。从系统中来看它们是交替执行的，但就每个终端用户而言，都感觉到自己独占了一台主机,不受其他用户的影响。这是通过进程并发执行实现的。</li>
+<li>如果用户数太多，主机处理的进程将会急剧增加，进程排队等待的时间也会很长，进程的响应时间也可能增长，用户将明显感觉到主机的速度变慢而不满意。</li>
+<li>另外，时间片的大小也会影响进程的响应时间。</li>
+</ul>
+<h5 id="时间片的设置"><a href="#时间片的设置" class="headerlink" title="时间片的设置"></a><strong>时间片的设置</strong></h5><ul>
+<li>进程切换将会增加系统的额外开销。</li>
+<li>时间片设定得太短，进程切换会非常频繁，从而降低处理机的效率;时间片设定得太长，将无法满足交互式用户对响应时间的要求。进程切换将会增加系统的额外开销时间片设定得太短，进程切换会非常频繁，从而降低处理机的效率；时间片设定得太长，将无法满足交互式用户对响应时间的要求</li>
+<li>因此,时间片大小的确定应综合考虑系统的最大用户数、响应时间、系统效率等多种因素。</li>
+</ul>
+<p>采用基于时间片轮转调度算法调度上例的4个进程，并分别按照两种时间片犬小轮转调度(1个单位时间和4个单位时间)，分析该算法的性能。<br>首先按照进程到达的先后顺序组织就绪队列，即P1,P2,P3,P4。从队首开始调度，首先调度P1，执行一个时间片，强行中断P1，P1回到就绪队列队尾排队;切换到P2，执行一个时间片，强行中断P2，P2回到就绪队列队尾排队(排在P1之后）…</p>
+<ul>
+<li><p>为了简单，图中忽略了进程切换时的系统开销，而实际操作系统中，这类额外开销是客观存在的。</p>
+</li>
+<li><p>可见,采用基于时间片轮转调度法,进程的周转时间和平均周转时间并不比采用FCFS和短进程优先调度算法小。</p>
+</li>
+<li><p>加上进程切换所需的系统开销时间，该算法的平均周转时间还会增长。</p>
+</li>
+<li><p>常用于分时系统及事务处理系统,合理的时间片大小将带来满意的响应时间。</p>
+</li>
+<li><p>通常,合理的时间片指，能让80%左右的进程在一个时间片内完成。<br>对于短的、计算型的进程较有利。不适合于批处理系统的进程调度不利于I/0型的进程。改进的方法之一，可以将I/O阻塞事件完成的进程单独组织一个就绪队列，该队列进程的时间片可以设置的小一些，且优先调度。</p>
+</li>
+</ul>
+<h4 id="基于优先级的调度算法"><a href="#基于优先级的调度算法" class="headerlink" title="基于优先级的调度算法"></a>基于优先级的调度算法</h4><ul>
+<li>基于时间片轮转调度法循环式地为每个被调度的进程分配一个时间片，对每个进程都是公平的。</li>
+<li>然而，实际应用中，进程的性质可能是不同的。例如，一个与用户进行交互的前台进程急迫地需要对用户的输入作出响应，而一个后台打印进程的迫切性也许就不那么重要。</li>
+<li>因此，可以为每个进程定义一个优先级,优先级越高的进程将优先获得处理机的调度。</li>
+</ul>
+<h4 id="如何设定进程的优先级呢"><a href="#如何设定进程的优先级呢" class="headerlink" title="如何设定进程的优先级呢?"></a>如何设定进程的优先级呢?</h4><ul>
+<li>进程完成功能的重要性(用户与系统)</li>
+<li>进程完成功能的急迫性(前台比后台急迫)</li>
+<li>为均衡系统资源的使用,指定进程（作业）优先级</li>
+<li>进程对资源的占用程度例如，可以为短进程(或作业）赋予较高的优先级。</li>
+</ul>
+<h5 id="静态与动态优先级"><a href="#静态与动态优先级" class="headerlink" title="静态与动态优先级"></a>静态与动态优先级</h5><ul>
+<li>静态优先级:一旦确定,则进程运行期间优先级一直不改变。</li>
+<li>动态优先级:系统首先赋予进程一个初始优先级，该优先级将随着进程的运行而改变。</li>
+</ul>
+<h5 id="动态优先级"><a href="#动态优先级" class="headerlink" title="动态优先级"></a>动态优先级</h5><ul>
+<li>典型的动态优先级变化方式为:<pre><code>—优先级随着进程运行的剩余时间的减少而上升，使将要执行结束的进程尽快完成;
+—或随着进程排队等待时间的增长而上升，使等待时间越长的进程优先得到调度，不至于长时间饥饿。
+</code></pre>
+</li>
+<li>具体实现方法,可以在每个时钟中断时,或需要进程切换时，重新计算就绪队列中各进程的优先级，并优先调度高优先级的进程。</li>
+<li>采用动态优先级的两种调度算法:剩余时间取短者优先和响应比高者优先。</li>
+</ul>
+<h5 id="剩余时间最短者优先"><a href="#剩余时间最短者优先" class="headerlink" title="剩余时间最短者优先"></a>剩余时间最短者优先</h5><ul>
+<li><p>为了使将要结束的进程尽早结束，释放系统资源，让别的进程执行。可以在每个时钟中断时，根据就绪队列中各进的剩余执行时间动态调整其优先级，剩余时间最短的进程优先级最高。</p>
+</li>
+<li><p>显然，该算法是剥夺型的短进程优先调度算法，调度程序总是选择剩余执行时间最短的进程调度执行。</p>
+</li>
+<li><p>与短进程优先调度算法一样,,该调度算法很难准确估讦进程的剩余执行时间。</p>
+</li>
+<li><p>由于长进程在未执行时，或刚开始执行的一段时间内，其剩余执行时间都不会最短，所以该算法对长进程不公平。</p>
+</li>
+<li><p>但是,它不象FCFS算法偏袒长进程,也不象轮转调度算法会产生很多中断而增加系统负担。</p>
+</li>
+<li><p>由于短进程提前完成,故采用剩余时间最短者优先的调度算法获得的平均周转时间比采用短进程优先算法短。</p>
+</li>
+</ul>
+<h5 id="响应比高者优先"><a href="#响应比高者优先" class="headerlink" title="响应比高者优先"></a>响应比高者优先</h5><pre><code>将进程的等待时间和进程的预期执行时间纳入优先级的计算，进程（预期执行时间)越长优先级越低，而随着进程的等待时间增长优先级上升，即进程的优先级与等待时间成正比，与进程执行时间成反比。令w表示等待时间，s表示预期执行时间，则响应比:
+</code></pre>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210911115554925.png" alt="image-20210911115554925"></p>
+<ul>
+<li>调度方法:若当前执行进程执行完毕，或需要阻塞等待某事件而释放处理机，调度程序选择就绪队列中响应比最大的进程执行。</li>
+<li>若等待时间相同，短进程因为s较小，R较大而优先调度。</li>
+<li>若进程的预期执行时间相同，则等待时间长的进程优先调度，相当于FCFS随着等待时间的增加,长进程的响应比不断增大，在某个时刻，也必然被调度。</li>
+</ul>
+<p>同短进程优先和剩余时间最短者优先调度算法一样，很难准确估计进程的预期执行时间。<br>每次调度之前都需要计算响应比，增加了系统开销。</p>
+<h4 id="反馈调度法"><a href="#反馈调度法" class="headerlink" title="反馈调度法"></a>反馈调度法</h4><ul>
+<li>前面介绍的几种调度算法都存在各自不同的问题，尤其是短进程优先、剩余时间最短者优先以及响应比高者优先调度算法都需要估计进程的预期执行时间，如果估计不准确，将影响调度结果和系统性能。</li>
+<li>如果根据进程执行历史，而非未来，进行调度，将解决这个问题。</li>
+<li>反馈调度法就是一种根据进程执行历史调整调度方式的调度方法，它结合了优先级和时间片轮转调度思想。</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210915224047007.png" alt="image-20210915224047007"></p>
+<ul>
+<li>该方法有利于交互型短进程或短批处理作业，因为它们一般只需要一个或很少的几个时间片即可完成，</li>
+<li>但可能使长进程的周转时间急剧增加。</li>
+<li>如果不断地有新进程到来，还可能出现长进程长期饥饿现象。</li>
+<li>为此,可以为各队列设置不同的时间片,优先级愈低时间片愈长。</li>
+</ul>
+<h4 id="进程调度算法小结"><a href="#进程调度算法小结" class="headerlink" title="进程调度算法小结"></a>进程调度算法小结</h4><ul>
+<li>如何选择进程调度算法与系统设计的目标有关。交互式多任务系统，主要考虑联机用户对响应时间的要求，一般采用基于时间片轮转调度算法，同时，根据进程的性质设置不同的优先级;</li>
+<li>批处理系统往往以作业的平均周转时间来衡量调度性能，常选用基于优先级的短进程(或作业)优先调度算法。</li>
+</ul>
+<h4 id="实时系统-Real-Time-System"><a href="#实时系统-Real-Time-System" class="headerlink" title="实时系统(Real-Time System)"></a>实时系统(Real-Time System)</h4><ul>
+<li>指，能及时响应外部事件的请求，在规定的时间内完成对该事件的处理，并控制所有实时任务协调一致地运行的计算机系统</li>
+<li>分为实时控制系统和实时信息处理系统</li>
+</ul>
+<h5 id="实时系统-实时控制系统"><a href="#实时系统-实时控制系统" class="headerlink" title="实时系统-实时控制系统"></a>实时系统-实时控制系统</h5><ul>
+<li><p>指要求进行实时控制的系统。</p>
+</li>
+<li><p>主要用于生产过程的控制，实时采集现场数据，并对所采集的数据进行及时处理，进而自动地控制相应的执行机构，使某些(个)参数(如温度、压力、方位等)能按预定的规律变化，以保证产品的质量和提高产量。</p>
+</li>
+<li><p>也可用于武器的控制，如火炮的自动控制系统，飞机的自动驾驶系统，以及导弹的制导系统等。</p>
+</li>
+</ul>
+<h5 id="实时系统-实时信息处理系统"><a href="#实时系统-实时信息处理系统" class="headerlink" title="实时系统-实时信息处理系统"></a>实时系统-实时信息处理系统</h5><ul>
+<li><p>指能对信息进行实时处理的系统。</p>
+</li>
+<li><p>该系统由一台或多台主机通过通信线路连接成百上千个远程终端，计算机接收从远程终端发来的服务请求，根据用户提出的问题，对信息进行检索和处理，并在很短的时间内为用户做出正确的回答。</p>
+</li>
+<li><p>典型的实时信息处理系统有:飞机订票系统、情报检索系统等。</p>
+</li>
+</ul>
+<h5 id="实时任务-real-time-task"><a href="#实时任务-real-time-task" class="headerlink" title="实时任务(real-time task)"></a>实时任务(real-time task)</h5><ul>
+<li>指，具有及时性要求的、常常被重复执行的特定进程，在实时系统中习惯称为任务。</li>
+</ul>
+<ul>
+<li><p>按任务执行时是否呈现周期性来分类:</p>
+<pre><code>(1)周期性实时任务，要求按指定的周期循环执行，以便周期性地控制某个外部事件。
+(2)非周期性实时任务，任务的执行无明显的周期性，但都必须联系着一个截止时间(deadline)
+</code></pre>
+</li>
+<li><p>截止时间包括:开始截止时间(任务在某时间以前,必须开始执行)和完成截止时间（任务在某时间以前必须完成)</p>
+</li>
+</ul>
+<ul>
+<li>根据对截止时间的要求将实时任务划分为:<pre><code>(1)硬实时任务，系统必须满足任务对截止时间的要求，否则可能出现难以预测的结果。
+(2）软实时任务它也联系着一个截止时间，但并不严格,若错过了任务的截止时间，对系统产生的影响不会太大。
+</code></pre>
+</li>
+</ul>
+<h5 id="实时调度的目标"><a href="#实时调度的目标" class="headerlink" title="实时调度的目标"></a>实时调度的目标</h5><ul>
+<li>主要考虑如何使硬实时任务在其规定的截止时间内完成，同时，尽可能使软实时任务也能在规定的截止时间内完成。</li>
+<li>而公平性和最短平均响应时间等要求已不再重要。</li>
+<li>但是，大多数现代实时操作系统无法直接处理任务的截止时间，它们只能尽量提高响应速度，以尽快地调度任务。</li>
+</ul>
+<h5 id="实时调度算法"><a href="#实时调度算法" class="headerlink" title="实时调度算法"></a>实时调度算法</h5><p>实时性要求不太高的实时系统可用的调度算法:</p>
+<ul>
+<li>基于时间片轮转调度算法。</li>
+<li>基于优先级的调度算法</li>
+<li>最早截止时间优先调度算法，即优先调度截止时间最近的实时任务。</li>
+</ul>
+<h6 id="速度单调调度算法-Rate-Monotonic-Scheduling，RMS"><a href="#速度单调调度算法-Rate-Monotonic-Scheduling，RMS" class="headerlink" title="速度单调调度算法(Rate Monotonic Scheduling，RMS)"></a>速度单调调度算法(Rate Monotonic Scheduling，RMS)</h6><ul>
+<li>根据任务的周期大小赋予优先级，最短周期的任务具有最高优先级。其中，<br>-任务周期( period)，指一个任务到达至下一任务到达之间的时间范围。<br>-任务速度（rate），即周期（以秒计）的倒数,以赫兹为单位。</li>
+<li>任务周期的结束，表示任务的硬截止时间。任务的执行时间不应超过任务周期。</li>
+<li>在RMS调度算法中，如果以任务速度为参数，则优先级函数是一个单调递增的函数，故称为速度单调算法。</li>
+<li>该调度算法广泛用于工业实时系统的周期性任务调度。</li>
+</ul>
+<p><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20210915224911628.png" alt="image-20210915224911628"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ehZyiL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/09/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%80%BB%E7%BB%932.1-2.4/">http://example.com/2021/09/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%80%BB%E7%BB%932.1-2.4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">ehZyiL的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">操作系统原理</a><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a></div><div class="post_share"><div class="social-share" data-image="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/09/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%80%E7%AB%A0/"><img class="next-cover" src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">操作系统原理 第一章总结</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/09/07/操作系统原理/操作系统原理第一章/" title="操作系统原理 第一章总结"><img class="cover" src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-07</div><div class="title">操作系统原理 第一章总结</div></div></a></div><div><a href="/2021/09/05/软件项目管理/Scrum讲解/" title="敏捷开发之Scrum"><img class="cover" src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum/Scrum%20cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-05</div><div class="title">敏捷开发之Scrum</div></div></a></div><div><a href="/2021/09/03/软件项目管理/软件项目管理/" title="软件项目管理笔记"><img class="cover" src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-03</div><div class="title">软件项目管理笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ehZyiL</div><div class="author-info__description">ehZyiL的博客</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ehZyiL"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ehZyiL" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/495028518@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">分享与记录,持续更新ing</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86-2-1-2-4"><span class="toc-number">1.</span> <span class="toc-text">第二章 进程管理 2.1-2.4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E7%AB%A0%E8%A6%81%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">本章要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%BC%95%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">2.1进程的引入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C"><span class="toc-number">1.2.1.</span> <span class="toc-text">程序顺序执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">程序并发执行</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">程序并发执行引发的问题</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.3.</span> <span class="toc-text">进程的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">1.2.4.</span> <span class="toc-text">进程的特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E8%BF%9B%E7%A8%8B%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.5.</span> <span class="toc-text">引入进程带来的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.6.</span> <span class="toc-text">进程的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCB"><span class="toc-number">1.2.7.</span> <span class="toc-text">PCB</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PCB%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80-%E5%8D%95%E4%B8%80%E9%98%9F%E5%88%97"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">PCB的组织方式之一 单一队列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PCB%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%BA%8C-%E8%A1%A8%E6%A0%BC%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.7.2.</span> <span class="toc-text">PCB的组织方式之二 表格结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PCB%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%89-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97"><span class="toc-number">1.2.7.3.</span> <span class="toc-text">PCB的组织方式之三 多级队列</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.</span> <span class="toc-text">2.2进程的状态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%89%A7%E8%A1%8C%E8%BD%A8%E8%BF%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">进程执行轨迹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%8A%B6%E6%80%81%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">两状态进程模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%8A%B6%E6%80%81%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B-%E9%98%9F%E5%88%97%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.3.3.</span> <span class="toc-text">两状态进程模型:队列形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.4.</span> <span class="toc-text">进程的五状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-%E5%A4%9A%E4%B8%AA%E8%BF%9B%E7%A8%8B%E7%AB%9E%E4%BA%89%E5%86%85%E5%AD%98%E8%B5%84%E6%BA%90"><span class="toc-number">1.3.5.</span> <span class="toc-text">问题:多个进程竞争内存资源</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">解决方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%8D%A2%E6%8A%80%E6%9C%AF-%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF-Swapping"><span class="toc-number">1.3.6.</span> <span class="toc-text">对换技术,交换技术(Swapping )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%8C%82%E8%B5%B7%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.7.</span> <span class="toc-text">进程的挂起状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8C%82%E8%B5%B7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.3.8.</span> <span class="toc-text">进程挂起的原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A2%AB%E6%8C%82%E8%B5%B7%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.9.</span> <span class="toc-text">被挂起进程的特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%82%E8%B5%B7%E4%B8%8E%E9%98%BB%E5%A1%9E"><span class="toc-number">1.3.10.</span> <span class="toc-text">挂起与阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B7%E6%9C%89%E6%8C%82%E8%B5%B7%E7%8A%B6%E6%80%81%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.11.</span> <span class="toc-text">具有挂起状态的进程状态转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">1.4.</span> <span class="toc-text">2.3进程的控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.1.</span> <span class="toc-text">两种执行模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.2.</span> <span class="toc-text">模式切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8%EF%BC%88Kernel"><span class="toc-number">1.4.3.</span> <span class="toc-text">操作系统内核（Kernel)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">资源管理功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%AF%E6%92%91%E5%8A%9F%E8%83%BD"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">支撑功能</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%8E%9F%E8%AF%AD"><span class="toc-number">1.4.3.2.1.</span> <span class="toc-text">进程控制原语</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%9B%E5%BB%BA"><span class="toc-number">1.4.4.</span> <span class="toc-text">进程创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%88%E6%AD%A2"><span class="toc-number">1.4.5.</span> <span class="toc-text">进程终止</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0-1"><span class="toc-number">1.4.5.1.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.4.5.2.</span> <span class="toc-text">具体原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="toc-number">1.4.5.3.</span> <span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%98%BB%E5%A1%9E%E4%B8%8E%E5%94%A4%E9%86%92"><span class="toc-number">1.4.6.</span> <span class="toc-text">进程的阻塞与唤醒</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%8C%82%E8%B5%B7%E4%B8%8E%E6%BF%80%E6%B4%BB"><span class="toc-number">1.4.7.</span> <span class="toc-text">进程的挂起与激活</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.8.</span> <span class="toc-text">进程切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8BA%E5%88%87%E6%8D%A2%E5%88%B0%E8%BF%9B%E7%A8%8BB%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.9.</span> <span class="toc-text">进程A切换到进程B的步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%87%E6%8D%A2vs%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.10.</span> <span class="toc-text">进程切换vs模式切换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="toc-number">1.5.</span> <span class="toc-text">2.4 进程调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B0%83%E5%BA%A6"><span class="toc-number">1.5.1.</span> <span class="toc-text">什么是调度?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E7%9B%AE%E6%A0%87"><span class="toc-number">1.5.2.</span> <span class="toc-text">调度目标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E5%8E%9F%E5%88%99"><span class="toc-number">1.5.3.</span> <span class="toc-text">调度原则</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%94%A8%E6%88%B7%E7%9A%84%E5%8E%9F%E5%88%99-%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">面向用户的原则:响应时间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%94%A8%E6%88%B7%E7%9A%84%E5%8E%9F%E5%88%99-%E5%91%A8%E8%BD%AC%E6%97%B6%E9%97%B4"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">面向用户的原则:周转时间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%94%A8%E6%88%B7%E7%9A%84%E5%8E%9F%E5%88%99-%E6%88%AA%E6%AD%A2%E6%97%B6%E9%97%B4"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">面向用户的原则:截止时间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E5%88%99-%E7%B3%BB%E7%BB%9F%E5%90%9E%E5%90%90%E9%87%8F"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">面向系统的原则:系统吞吐量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E5%88%99-%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%A9%E7%94%A8%E7%8E%87"><span class="toc-number">1.5.3.5.</span> <span class="toc-text">面向系统的原则:处理机利用率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E5%88%99-%E5%90%84%E7%B1%BB%E8%B5%84%E6%BA%90%E7%9A%84%E5%B9%B3%E8%A1%A1%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.3.6.</span> <span class="toc-text">面向系统的原则:各类资源的平衡使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E5%88%99-%E5%85%AC%E5%B9%B3%E6%80%A7"><span class="toc-number">1.5.3.7.</span> <span class="toc-text">面向系统的原则:公平性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E5%88%99-%E4%BC%98%E5%85%88%E6%9D%83"><span class="toc-number">1.5.3.8.</span> <span class="toc-text">面向系统的原则:优先权</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.</span> <span class="toc-text">进程调度方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F-%E9%9D%9E%E5%89%A5%E5%A4%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">进程调度方式:非剥夺方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F-%E5%89%A5%E5%A4%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">进程调度方式:剥夺方式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.5.5.</span> <span class="toc-text">调度的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%95%BF%E7%A8%8B%E8%B0%83%E5%BA%A6-Long-term-scheduling%EF%BC%89"><span class="toc-number">1.5.5.1.</span> <span class="toc-text">长程调度(Long-term scheduling）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%95%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E4%B8%A4%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.5.1.1.</span> <span class="toc-text">长程调度需要考虑两个问题</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9F%AD%E7%A8%8B%E8%B0%83%E5%BA%A6-Short-term-scheduling"><span class="toc-number">1.5.5.2.</span> <span class="toc-text">短程调度(Short-term scheduling)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E7%A8%8B%E8%B0%83%E5%BA%A6-Medium-term-scheduling%EF%BC%89"><span class="toc-number">1.5.5.3.</span> <span class="toc-text">中程调度(Medium-term scheduling）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95-%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%EF%BC%88FCFS"><span class="toc-number">1.5.6.</span> <span class="toc-text">进程调度算法-先来先服务（FCFS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E8%BF%9B%E7%A8%8B%E4%BC%98%E5%85%88"><span class="toc-number">1.5.7.</span> <span class="toc-text">短进程优先</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC%E8%B0%83%E5%BA%A6%E6%B3%95"><span class="toc-number">1.5.8.</span> <span class="toc-text">时间片轮转调度法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E7%89%87%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.8.1.</span> <span class="toc-text">时间片的设置</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E4%BC%98%E5%85%88%E7%BA%A7%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.9.</span> <span class="toc-text">基于优先级的调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E5%AE%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E5%91%A2"><span class="toc-number">1.5.10.</span> <span class="toc-text">如何设定进程的优先级呢?</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E4%B8%8E%E5%8A%A8%E6%80%81%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.5.10.1.</span> <span class="toc-text">静态与动态优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.5.10.2.</span> <span class="toc-text">动态优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%A9%E4%BD%99%E6%97%B6%E9%97%B4%E6%9C%80%E7%9F%AD%E8%80%85%E4%BC%98%E5%85%88"><span class="toc-number">1.5.10.3.</span> <span class="toc-text">剩余时间最短者优先</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E6%AF%94%E9%AB%98%E8%80%85%E4%BC%98%E5%85%88"><span class="toc-number">1.5.10.4.</span> <span class="toc-text">响应比高者优先</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E9%A6%88%E8%B0%83%E5%BA%A6%E6%B3%95"><span class="toc-number">1.5.11.</span> <span class="toc-text">反馈调度法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93"><span class="toc-number">1.5.12.</span> <span class="toc-text">进程调度算法小结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E7%B3%BB%E7%BB%9F-Real-Time-System"><span class="toc-number">1.5.13.</span> <span class="toc-text">实时系统(Real-Time System)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E7%B3%BB%E7%BB%9F-%E5%AE%9E%E6%97%B6%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.13.1.</span> <span class="toc-text">实时系统-实时控制系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E7%B3%BB%E7%BB%9F-%E5%AE%9E%E6%97%B6%E4%BF%A1%E6%81%AF%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.13.2.</span> <span class="toc-text">实时系统-实时信息处理系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E4%BB%BB%E5%8A%A1-real-time-task"><span class="toc-number">1.5.13.3.</span> <span class="toc-text">实时任务(real-time task)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E8%B0%83%E5%BA%A6%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="toc-number">1.5.13.4.</span> <span class="toc-text">实时调度的目标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.13.5.</span> <span class="toc-text">实时调度算法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%80%9F%E5%BA%A6%E5%8D%95%E8%B0%83%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95-Rate-Monotonic-Scheduling%EF%BC%8CRMS"><span class="toc-number">1.5.13.5.1.</span> <span class="toc-text">速度单调调度算法(Rate Monotonic Scheduling，RMS)</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%80%BB%E7%BB%932.1-2.4/" title="操作系统原理 第二章总结2.1-2.4"><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统原理 第二章总结2.1-2.4"/></a><div class="content"><a class="title" href="/2021/09/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%80%BB%E7%BB%932.1-2.4/" title="操作系统原理 第二章总结2.1-2.4">操作系统原理 第二章总结2.1-2.4</a><time datetime="2021-09-26T14:04:17.462Z" title="发表于 2021-09-26 22:04:17">2021-09-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="操作系统原理 第一章总结"><img src="/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统原理 第一章总结"/></a><div class="content"><a class="title" href="/2021/09/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="操作系统原理 第一章总结">操作系统原理 第一章总结</a><time datetime="2021-09-07T09:56:04.000Z" title="发表于 2021-09-07 17:56:04">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/" title="软件项目管理-生存期模型(讲解版)"><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B/%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8Bcover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软件项目管理-生存期模型(讲解版)"/></a><div class="content"><a class="title" href="/2021/09/06/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E7%94%9F%E5%AD%98%E6%9C%9F%E6%A8%A1%E5%9E%8B(%E8%AE%B2%E8%A7%A3%E7%89%88)/" title="软件项目管理-生存期模型(讲解版)">软件项目管理-生存期模型(讲解版)</a><time datetime="2021-09-06T04:36:08.000Z" title="发表于 2021-09-06 12:36:08">2021-09-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/05/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum%E8%AE%B2%E8%A7%A3/" title="敏捷开发之Scrum"><img src="/img/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum/Scrum%20cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="敏捷开发之Scrum"/></a><div class="content"><a class="title" href="/2021/09/05/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/Scrum%E8%AE%B2%E8%A7%A3/" title="敏捷开发之Scrum">敏捷开发之Scrum</a><time datetime="2021-09-05T10:42:56.000Z" title="发表于 2021-09-05 18:42:56">2021-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/05/JAVA/day06%E3%80%90Map%E3%80%91/" title="Day06"><img src="/img/java/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Day06"/></a><div class="content"><a class="title" href="/2021/09/05/JAVA/day06%E3%80%90Map%E3%80%91/" title="Day06">Day06</a><time datetime="2021-09-05T02:35:46.000Z" title="发表于 2021-09-05 10:35:46">2021-09-05</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By ehZyiL</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?ehZyiL";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="ehZyiL";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && location.pathname =='/'){
+    
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms"></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载swiper')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script>
+<script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.js"></script>
+<script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper@0.18/swiper/swiperindex.js"></script>
+<style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>function electric_clock_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading" class="entered loading"></div></div></div></div></div>';
+                console.log('已挂载electric_clock')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            electric_clock_injector_config()
+        } </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax  src="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.js"></script><!-- hexo injector body_end end --></body></html>
